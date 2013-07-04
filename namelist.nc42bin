@@ -1,0 +1,8 @@
+&param
+ imax    = 2560
+ jmax    = 3360
+ varname = "rainfall_rate"
+ input   = "input.nc4"
+ output  = "output.bin"
+ debug_level = 100
+/

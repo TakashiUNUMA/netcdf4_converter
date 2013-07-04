@@ -14,13 +14,12 @@ program bin2nc4
   integer :: lat, lon, rec, i, j
   integer :: ncid, varid, lon_varid, lat_varid
   integer :: lvl_dimid, lon_dimid, lat_dimid, rec_dimid
-  integer, dimension(:) :: start, count, dimids, chunks
+  integer, dimension(:), allocatable :: start, count, dimids, chunks
   real :: START_LON, START_LAT, LON_INT, LAT_INT
-  real, dimension(:) :: lons, lats
+  real, dimension(:), allocatable :: lons, lats
   real, dimension(:,:,:), allocatable :: var_out
-  character (len = 10) :: VAR_UNITS, LAT_UNITS, LON_UNITS
-  character (len = 10) :: LON_NAME, LAT_NAME, LVL_NAME, REC_NAME
-  character (len = 20) :: VAR_NAME
+  character (len = 20) :: VAR_UNITS, LAT_UNITS, LON_UNITS
+  character (len = 20) :: LON_NAME, LAT_NAME, LVL_NAME, VAR_NAME
   character (len = 80) :: infile
   character (len = 80) :: outfile
   real :: nan
@@ -28,8 +27,8 @@ program bin2nc4
   integer :: debug_level
 
   integer, parameter :: NDIMS = 4, NRECS = 1
-  character (len = *), parameter :: UNITS = "units"
-
+  character (len = *), parameter :: UNITS    = "units"
+  character (len = *), parameter :: REC_NAME = "time"
 
   !ccccccccccccccccccccccccccccccccccccccccccccccc
   ! Input from namelist
@@ -44,7 +43,7 @@ program bin2nc4
   if(debug_level.ge.100) print '(a17,a80)',   " OUTFILE       = ", OUTFILE
   if(debug_level.ge.100) print '(a17,i6)',    " NLONS         = ", NLONS
   if(debug_level.ge.100) print '(a17,i6)',    " NLATS         = ", NLATS
-  if(debug_level.ge.100) print '(a17,i6)',    " NLVLS         = ", NLEVS
+  if(debug_level.ge.100) print '(a17,i6)',    " NLVLS         = ", NLVLS
   if(debug_level.ge.100) print '(a17,f10.6)', " START_LON     = ", START_LON
   if(debug_level.ge.100) print '(a17,f10.6)', " START_LAT     = ", START_LAT
   if(debug_level.ge.100) print '(a17,f10.6)', " LON_INT       = ", LON_INT
@@ -83,7 +82,7 @@ program bin2nc4
   
   do j=1,NLATS
   do i=1,NLONS
-     if(vae_out(i,j,1).lt.0.) then
+     if(var_out(i,j,1).lt.0.) then
         var_out(i,j,1) = nan
      end if
   end do
@@ -107,7 +106,7 @@ program bin2nc4
   !ccccccccccccccccccccccccccccccccccccccccccccccc
   ! Create the file. 
   !ccccccccccccccccccccccccccccccccccccccccccccccc
-  call check( nf90_create(FILE_NAME, nf90_hdf5, ncid) )
+  call check( nf90_create(OUTFILE, nf90_hdf5, ncid) )
   if(debug_level.ge.100) print *, "Success create the file"
 
   !ccccccccccccccccccccccccccccccccccccccccccccccc  

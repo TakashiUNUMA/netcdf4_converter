@@ -1,6 +1,6 @@
 &param
- INFILE        = input.bin
- OUTFILE       = output.nc4
+ INFILE        = "input.bin"
+ OUTFILE       = "output.nc4"
  NLONS	       = 2560
  NLATS	       = 3360
  NLVLS	       = 1
