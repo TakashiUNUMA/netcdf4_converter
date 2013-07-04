@@ -1,0 +1,20 @@
+&param
+ INFILE        = input.bin
+ OUTFILE       = output.nc4
+ NLONS	       = 2560
+ NLATS	       = 3360
+ NLVLS	       = 1
+ START_LON     = 118.006250
+ START_LAT     = 20.004167
+ LON_INT       = 0.012500
+ LAT_INT       = 0.008333
+ LON_UNITS     = "degrees_east"
+ LAT_UNITS     = "degrees_north"
+ VAR_UNITS     = "mm/h"
+ LON_NAME      = "longitude"
+ LAT_NAME      = "latitude"
+ LVL_NAME      = "level"
+ VAR_NAME      = "rainfall_rate"
+ deflate_level = 2
+ debug_level   = 100
+/
